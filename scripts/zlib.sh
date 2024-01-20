@@ -35,12 +35,12 @@
 
 # **************************************************************************
 
-PKG_VERSION=1.2.13
+PKG_VERSION=1.3.1
 PKG_NAME=$PKG_ARCHITECTURE-zlib-${PKG_VERSION}-$LINK_TYPE_SUFFIX
 PKG_DIR_NAME=zlib-${PKG_VERSION}
 PKG_TYPE=.tar.gz
 PKG_URLS=(
-	"https://github.com/madler/zlib/archive/refs/tags/v${PKG_VERSION}${PKG_TYPE}"
+	"https://github.com/madler/zlib/releases/download/v${PKG_VERSION}/zlib-${PKG_VERSION}${PKG_TYPE}"
 )
 
 PKG_PRIORITY=prereq
