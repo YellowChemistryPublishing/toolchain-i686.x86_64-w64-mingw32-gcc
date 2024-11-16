@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=3.11.6
+PKG_VERSION=3.12.9
 PKG_NAME=Python-${PKG_VERSION}
 PKG_DIR_NAME=Python-${PKG_VERSION}
 PKG_TYPE=git
@@ -48,14 +48,16 @@ PKG_PRIORITY=extra
 #
 
 PKG_EXECUTE_AFTER_UNCOMPRESS=(
-	"git reset --hard f8ce319d46c25b8afe6083284315169d8f418880" # Reset to this commit hash for reproducible builds
+	"git reset --hard 1b241aa8572ee8cd4131fffca838b6bbdf5a7b5e" # Reset to this commit hash for reproducible builds
 )
 
 #
 
 PKG_PATCHES=(
 	Python3/python-3.11-remove-WASM_STDLIB-target.patch
-	Python3/0200-launcher-permissive-c-error-on-gcc14.patch
+	Python3/python-3.11-_cursesmodule-fix-array-type.patch
+	Python3/python-3.11-fix-incompatible-pointer-types.patch
+	Python3/python-3.12-fix-tk.patch
 )
 
 #
@@ -78,8 +80,7 @@ PKG_EXECUTE_AFTER_PATCH=(
 	popd > /dev/null
 }
 
-LIBFFI_VERSION=$( grep 'PKG_VERSION=' $TOP_DIR/scripts/libffi.sh | sed 's|PKG_VERSION=||' )
-MY_CPPFLAGS="-I$LIBSW_DIR/include -I$LIBSW_DIR/include/ncursesw -I$PREREQW_DIR/$BUILD_ARCHITECTURE-zlib-$LINK_TYPE_SUFFIX/include"
+MY_CPPFLAGS="-Wno-error=implicit-function-declaration -I$LIBSW_DIR/include -I$LIBSW_DIR/include/ncursesw -I$PREREQW_DIR/$BUILD_ARCHITECTURE-zlib-$LINK_TYPE_SUFFIX/include"
 
 # Workaround for conftest error on 64-bit builds
 export ac_cv_working_tzset=no
@@ -102,12 +103,10 @@ PKG_CONFIGURE_FLAGS=(
 	# --with-tzpath=$LIBS_DIR/share/zoneinfo
 	--enable-optimizations
 	#
-	LIBFFI_INCLUDEDIR="$LIBSW_DIR/include"
-	PKG_CONFIG_PATH="$PREREQ_DIR/$BUILD_ARCHITECTURE-zlib-$LINK_TYPE_SUFFIX/lib/pkgconfig:$LIBS_DIR/lib/pkgconfig"
-	CFLAGS="$COMMON_CFLAGS $MY_CPPFLAGS -D__USE_MINGW_ANSI_STDIO=1 -DNCURSES_STATIC -fpermissive"
+	CFLAGS="$COMMON_CFLAGS $MY_CPPFLAGS -D__USE_MINGW_ANSI_STDIO=1 -DNCURSES_STATIC"
 	CPPFLAGS="$COMMON_CPPFLAGS $MY_CPPFLAGS -D__USE_MINGW_ANSI_STDIO=1 -DNCURSES_STATIC"
 	LDFLAGS="$COMMON_LDFLAGS -L$PREREQW_DIR/$BUILD_ARCHITECTURE-zlib-$LINK_TYPE_SUFFIX/lib -L$LIBSW_DIR/lib"
-	LIBS="\"-lffi -ltcl -ltk -lole32 -loleaut32 -luuid\""
+	OPENSSL_LIBS="\"-lcrypto -lssl\""
 )
 
 #
