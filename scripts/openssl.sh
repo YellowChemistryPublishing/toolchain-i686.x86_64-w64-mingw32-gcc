@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=3.4.0
+PKG_VERSION=3.4.1
 PKG_NAME=openssl-${PKG_VERSION}
 PKG_DIR_NAME=openssl-${PKG_VERSION}
 PKG_TYPE=.tar.gz
