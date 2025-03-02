@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=1.6-ga.1
+PKG_VERSION=2.0-ga.1
 PKG_NAME=$PKG_ARCHITECTURE-mcfgthread-${PKG_VERSION}
 PKG_DIR_NAME=mcfgthread-${PKG_VERSION}
 PKG_TYPE=.tar.gz
@@ -51,44 +51,40 @@ PKG_PATCHES=()
 
 #
 
-PKG_EXECUTE_AFTER_PATCH=(
-	"autoreconf -i"
-)
+ABI_MAJOR=$(echo $PKG_VERSION | sed -E 's/([^.]+)\.([^.]+)-([^.]+).*/\1/')
+ABI_MINOR=$(echo $PKG_VERSION | sed -E 's/([^.]+)\.([^.]+)-([^.]+).*/\2/')
+ABI_STRING=$(echo $PKG_VERSION | sed -E 's/([^.]+)\.([^.]+)-([^.]+).*/\1.\2.\3/')
 
-#
-
-PKG_CONFIGURE_FLAGS=(
-	--host=$HOST
-	--build=$BUILD
-	--target=$TARGET
-	#
-	--prefix=$PREREQ_DIR/$PKG_ARCHITECTURE-mcfgthread
-	#
-	CFLAGS="$COMMON_CFLAGS"
-	CXXFLAGS="$COMMON_CXXFLAGS"
-	CPPFLAGS="$COMMON_CPPFLAGS"
-	LDFLAGS="$COMMON_LDFLAGS"
+PKG_EXECUTE_AFTER_CONFIGURE=(
+	"sed 's/@abi_major@/$ABI_MAJOR/g; s/@abi_minor@/$ABI_MINOR/g; s/@abi_string@/\"$ABI_STRING\"/g' $SRCS_DIR/$PKG_DIR_NAME/mcfgthread/version.h.in > version.h"
 )
 
 #
 
 PKG_MAKE_FLAGS=(
+	-f "$PATCHES_DIR/mcfgthread/Makefile"
 	-j$JOBS
 	all
-)
-
-#
-
-PKG_TESTSUITE_FLAGS=(
-	-j$JOBS
-	check
+	CC=gcc
+	AR=ar
+	RC=windres
+	CFLAGS="\"$COMMON_CFLAGS\""
+	CXXFLAGS="\"$COMMON_CXXFLAGS\""
+	CPPFLAGS="\"$COMMON_CPPFLAGS\""
+	LDFLAGS="\"$COMMON_LDFLAGS\""
+	ABI_MAJOR=$ABI_MAJOR
+	SOURCE_DIR="$SRCS_DIR/$PKG_DIR_NAME/mcfgthread"
 )
 
 #
 
 PKG_INSTALL_FLAGS=(
+	-f "$PATCHES_DIR/mcfgthread/Makefile"
 	-j$JOBS
 	$( [[ $STRIP_ON_INSTALL == yes ]] && echo install-strip || echo install )
+	DESTDIR="$PREREQ_DIR/$PKG_ARCHITECTURE-mcfgthread"
+	ABI_MAJOR=$ABI_MAJOR
+	SOURCE_DIR="$SRCS_DIR/$PKG_DIR_NAME/mcfgthread"
 )
 
 # **************************************************************************
