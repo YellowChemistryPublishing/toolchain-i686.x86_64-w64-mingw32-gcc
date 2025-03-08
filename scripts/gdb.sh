@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=$( [[ `echo $BUILD_VERSION | cut -d. -f1` == 4 || `echo $BUILD_VERSION | cut -d. -f1` == 5 ]] && { echo 7.12; } || { echo 14.2; } )
+PKG_VERSION=$( [[ `echo $BUILD_VERSION | cut -d. -f1` == 4 || `echo $BUILD_VERSION | cut -d. -f1` == 5 ]] && { echo 7.12; } || { echo 16.2; } )
 PKG_NAME=gdb-${PKG_VERSION}
 PKG_DIR_NAME=gdb-${PKG_VERSION}
 PKG_TYPE=.tar.xz
@@ -54,7 +54,7 @@ PKG_PATCHES=(
 	gdb/gdb-perfomance.patch
 	$( [[ ${PKG_VERSION} == 7.12 ]] \
 		&& { echo "gdb/gdb-7.12-fix-using-gnu-print.patch"; } \
-		|| { echo "gdb/gdb-14.2-fix-using-gnu-print.patch"; } 
+		|| { echo "gdb/gdb-16.2-fix-using-gnu-print.patch"; } 
 	)
 	$( [[ ${PKG_VERSION} == 7.12 ]] && { echo "gdb/gdb-7.12-dynamic-libs.patch"; } || { echo "gdb/gdb-8.3.1-dynamic-libs.patch"; } )
 	# $( [[ ${PKG_VERSION} == 10.2 ]] && { echo "gdb/gdb-10.2-fix-gnulib-dependencies.patch"; } )
