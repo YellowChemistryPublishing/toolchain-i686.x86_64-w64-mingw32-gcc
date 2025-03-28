@@ -51,13 +51,13 @@ elif [[ `echo $BUILD_VERSION | cut -d. -f1` -le 10 && ${BUILD_VERSION} != trunk 
    PKG_VERSION=0.23
    PKG_TYPE=.tar.xz
 else
-   PKG_VERSION=0.25
+   PKG_VERSION=0.27
    PKG_TYPE=.tar.xz
 fi
 PKG_NAME=$BUILD_ARCHITECTURE-isl-${PKG_VERSION}-$LINK_TYPE_SUFFIX
 PKG_DIR_NAME=isl-${PKG_VERSION}
 PKG_URLS=(
-	"https://libisl.sourceforge.io/isl-${PKG_VERSION}${PKG_TYPE}"
+	"https://prdownloads.sourceforge.net/libisl/isl-${PKG_VERSION}${PKG_TYPE}"
 )
 
 PKG_PRIORITY=prereq
