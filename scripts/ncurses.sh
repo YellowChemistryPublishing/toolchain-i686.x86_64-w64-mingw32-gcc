@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=6.2
+PKG_VERSION=6.5
 PKG_NAME=ncurses-${PKG_VERSION}
 PKG_DIR_NAME=ncurses-${PKG_VERSION}
 PKG_TYPE=.tar.gz
@@ -49,6 +49,9 @@ PKG_PRIORITY=extra
 
 PKG_PATCHES=(
 	ncurses/work_around_changed_output_of_GNU_cpp_5.x.patch
+	ncurses/ncurses-6.3-pkgconfig.patch
+	ncurses/ncurses-6.3-cflags-private.patch
+	ncurses/ncurses-bool.patch
 )
 
 #
