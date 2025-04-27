@@ -47,7 +47,9 @@ PKG_PRIORITY=prereq
 
 #
 
-PKG_PATCHES=()
+PKG_PATCHES=(
+	gmp/configure-compilation-error.patch
+)
 
 #
 
