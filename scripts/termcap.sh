@@ -60,7 +60,7 @@ PKG_CONFIGURE_FLAGS=(
 	#
 	--prefix=$LIBS_DIR
 	#
-	CFLAGS="$COMMON_CFLAGS -Wno-error=implicit-function-declaration"
+	CFLAGS="$COMMON_CFLAGS -std=gnu89 -Wno-error=implicit-function-declaration"
 	CXXFLAGS="$COMMON_CXXFLAGS"
 	CPPFLAGS="$COMMON_CPPFLAGS"
 	LDFLAGS="$COMMON_LDFLAGS"

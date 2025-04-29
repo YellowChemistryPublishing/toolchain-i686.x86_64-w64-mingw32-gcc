@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=8.1
+PKG_VERSION=8.2
 PKG_NAME=readline-${PKG_VERSION}
 PKG_DIR_NAME=readline-${PKG_VERSION}
 PKG_TYPE=.tar.gz
@@ -48,8 +48,20 @@ PKG_PRIORITY=extra
 #
 
 PKG_PATCHES=(
-	readline/readline81-001.patch
-	readline/Fixed-missing-POSIX_SIGNALS-check.patch
+	readline/readline82-001.patch
+	readline/readline82-002.patch
+	readline/readline82-003.patch
+	readline/readline82-004.patch
+	readline/readline82-005.patch
+	readline/readline82-006.patch
+	readline/readline82-007.patch
+	# patches imported from msys2
+	readline/0001-sigwinch.patch
+	readline/0002-event-hook.patch
+	readline/0003-fd_set.patch
+	readline/0004-locale.patch
+	#
+	readline/remove-export-all-flag.patch
 )
 
 #
@@ -64,7 +76,7 @@ PKG_CONFIGURE_FLAGS=(
 	$LINK_TYPE_SHARED
 	#
 	--without-curses
-	CFLAGS="$COMMON_CFLAGS -D__USE_MINGW_ANSI_STDIO=1 -fcommon"
+	CFLAGS="$COMMON_CFLAGS -D__USE_MINGW_ANSI_STDIO=1 -D__USE_MINGW_ALARM -D_POSIX -fcommon"
 	CXXFLAGS="$COMMON_CXXFLAGS"
 	CPPFLAGS="$COMMON_CPPFLAGS"
 	LDFLAGS="$COMMON_LDFLAGS"
