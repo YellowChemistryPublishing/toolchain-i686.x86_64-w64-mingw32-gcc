@@ -47,7 +47,9 @@ PKG_PRIORITY=prereq
 
 #
 
-PKG_PATCHES=()
+PKG_PATCHES=(
+	mcfgthread/build-Declare-BaseGetNamedObjectDirectory-in-KERNEL32.patch
+)
 
 #
 
