@@ -36,7 +36,7 @@
 # **************************************************************************
 
 MINGW_W64_BUILDS_VERSION="MinGW-W64-builds-5.0.0"
-MINGW_W64_PKG_STRING="Built by MinGW-Builds project"
+MINGW_W64_PKG_STRING="Built by Engineering @ Yellow Chemistry Publishing."
 
 # **************************************************************************
 

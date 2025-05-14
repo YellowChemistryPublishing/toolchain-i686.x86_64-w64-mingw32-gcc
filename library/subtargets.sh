@@ -100,7 +100,7 @@ function func_get_subtargets {
 		openssl
 		$([[ $python_version == 3 ]] && echo xz-utils)
 		sqlite
-		python-$python_version
+		# python-$python_version
 	)
 
 	local readonly BOOTSTRAP_SUBTARGETS=(
