@@ -1,3 +1,12 @@
+![Forked by atmc Badge](https://img.shields.io/badge/atmc-We%20forked%20this!-%23303030?labelColor=%23c80000)
+
+Convenience fork courtesy of Engineering @ Yellow Chemistry Publishing.
+
+This toolchain must be hosted (built) on win32-msys2, and targets mingw(32|64).
+Run `python build-(i686|x86_64)-w64-mingw32.py` to build your preferred toolchain.
+
+___
+
 # MinGW Builds [![x86_64 and i686 release builds](https://github.com/niXman/mingw-builds/actions/workflows/build_cmake.yml/badge.svg)](https://github.com/niXman/mingw-builds/actions/workflows/build_cmake.yml)
 
 The scripts provided by the MinGW-Builds project[1] are designed
