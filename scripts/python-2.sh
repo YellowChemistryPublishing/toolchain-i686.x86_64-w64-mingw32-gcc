@@ -210,7 +210,8 @@ PKG_INSTALL_FLAGS=(
 
 #
 
-[[ $BUILD_MODE == gcc || $BUILD_MODE == python ]] && {
+[[ # $BUILD_MODE == gcc ||
+    $BUILD_MODE == python ]] && {
 	[[ $BUILD_MODE == gcc ]] && {
 		RM_PYTHON_TEST_DIR_CMD="rm -rf $LIBS_DIR/lib/python?.?/test"
 	} || {
