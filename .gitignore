@@ -1,5 +1,6 @@
-/*-build
-/toolchains
+/*-build/
+/build-*/
+/toolchains/
 *.exe
 *.bat
 *.7z
