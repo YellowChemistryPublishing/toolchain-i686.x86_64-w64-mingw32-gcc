@@ -1,184 +1,31 @@
-name: x86_64 and i686 release builds
+name: Build and Package
 
 on: [push, pull_request]
 
 jobs:
-  build:
-    name: ${{ matrix.config.name }}
-    runs-on: windows-2019
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-        - {
-            name: "x86_64 posix seh msvcrt",
-            artifact: "x86_64-15.1.0-release-posix-seh-msvcrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-15.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=posix --exceptions=seh --arch=x86_64 --bin-compress --enable-languages=c,c++,fortran --logviewer-command=cat"
-          }
-        - {
-            name: "x86_64 posix seh ucrt",
-            artifact: "x86_64-15.1.0-release-posix-seh-ucrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-15.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=posix --exceptions=seh --arch=x86_64 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
-          }
-        - {
-            name: "x86_64 win32 seh msvcrt",
-            artifact: "x86_64-15.1.0-release-win32-seh-msvcrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-15.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=win32 --exceptions=seh --arch=x86_64 --bin-compress --enable-languages=c,c++,fortran --logviewer-command=cat"
-          }
-        - {
-            name: "x86_64 win32 seh ucrt",
-            artifact: "x86_64-15.1.0-release-win32-seh-ucrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-15.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=win32 --exceptions=seh --arch=x86_64 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
-          }
-        - {
-            name: "x86_64 mcf seh ucrt",
-            artifact: "x86_64-15.1.0-release-mcf-seh-ucrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-15.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=mcf --exceptions=seh --arch=x86_64 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
-          }
-        - {
-            name: "i686 posix dwarf msvcrt",
-            artifact: "i686-15.1.0-release-posix-dwarf-msvcrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-15.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=posix --exceptions=dwarf --arch=i686 --bin-compress --enable-languages=c,c++,fortran --logviewer-command=cat"
-          }
-        - {
-            name: "i686 posix dwarf ucrt",
-            artifact: "i686-15.1.0-release-posix-dwarf-ucrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-15.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=posix --exceptions=dwarf --arch=i686 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
-          }
-        - {
-            name: "i686 win32 dwarf msvcrt",
-            artifact: "i686-15.1.0-release-win32-dwarf-msvcrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-15.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=win32 --exceptions=dwarf --arch=i686 --bin-compress --enable-languages=c,c++,fortran --logviewer-command=cat"
-          }
-        - {
-            name: "i686 win32 dwarf ucrt",
-            artifact: "i686-15.1.0-release-win32-dwarf-ucrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-15.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=win32 --exceptions=dwarf --arch=i686 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
-          }
-        - {
-            name: "i686 mcf dwarf ucrt",
-            artifact: "i686-15.1.0-release-mcf-dwarf-ucrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-15.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=mcf --exceptions=dwarf --arch=i686 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
-          }
+    build:
+        name: ${{ matrix.config.arch }}-w64-mingw32-gcc
+        runs-on: windows-2019
+        strategy:
+            fail-fast: false
+            matrix:
+                config:
+                    - { arch: "i686" }
+                    - { arch: "x86_64" }
 
-    steps:
-    - uses: actions/checkout@v3
+        steps:
+            - uses: actions/checkout@v3
 
-    - uses: msys2/setup-msys2@v2
-      with:
-        update: true
+            - uses: msys2/setup-msys2@v2
+              with:
+                  update: true
 
-    - name: Build
-      shell: msys2 {0}
-      run: ./build ${{ matrix.config.build_cmd }}
+            - name: Build
+              shell: msys2 {0}
+              run: python3 build-either-w64-mingw32-gcc.py --arch ${{ matrix.config.arch }}
 
-    - name: Upload
-      uses: actions/upload-artifact@v4
-      with:
-        path: c:/buildroot/archives/${{ matrix.config.artifact }}
-        name: ${{ matrix.config.artifact }}
-
-  release:
-    if: contains(github.ref, 'tags/v')
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1.0.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-
-    - name: Store Release url
-      run: |
-        echo "${{ steps.create_release.outputs.upload_url }}" > ./upload_url
-
-    - uses: actions/upload-artifact@v4
-      with:
-        path: ./upload_url
-        name: upload_url
-
-  publish:
-    if: contains(github.ref, 'tags/v')
-    name: ${{ matrix.config.name }}
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-        - {
-            name: "x86_64 posix seh msvcrt",
-            artifact: "x86_64-15.1.0-release-posix-seh-msvcrt-rt_v12-rev0.7z"
-          }
-        - {
-            name: "x86_64 posix seh ucrt",
-            artifact: "x86_64-15.1.0-release-posix-seh-ucrt-rt_v12-rev0.7z"
-          }
-        - {
-            name: "x86_64 win32 seh msvcrt",
-            artifact: "x86_64-15.1.0-release-win32-seh-msvcrt-rt_v12-rev0.7z"
-          }
-        - {
-            name: "x86_64 win32 seh ucrt",
-            artifact: "x86_64-15.1.0-release-win32-seh-ucrt-rt_v12-rev0.7z"
-          }
-        - {
-            name: "x86_64 mcf seh ucrt",
-            artifact: "x86_64-15.1.0-release-mcf-seh-ucrt-rt_v12-rev0.7z"
-          }
-        - {
-            name: "i686 posix dwarf msvcrt",
-            artifact: "i686-15.1.0-release-posix-dwarf-msvcrt-rt_v12-rev0.7z"
-          }
-        - {
-            name: "i686 posix dwarf ucrt",
-            artifact: "i686-15.1.0-release-posix-dwarf-ucrt-rt_v12-rev0.7z"
-          }
-        - {
-            name: "i686 win32 dwarf msvcrt",
-            artifact: "i686-15.1.0-release-win32-dwarf-msvcrt-rt_v12-rev0.7z"
-          }
-        - {
-            name: "i686 win32 dwarf ucrt",
-            artifact: "i686-15.1.0-release-win32-dwarf-ucrt-rt_v12-rev0.7z"
-          }
-        - {
-            name: "i686 mcf dwarf ucrt",
-            artifact: "i686-15.1.0-release-mcf-dwarf-ucrt-rt_v12-rev0.7z"
-          }
-
-    needs: release
-
-    steps:
-    - name: Download artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: ${{ matrix.config.artifact }}
-        path: ./
-
-    - name: Download URL
-      uses: actions/download-artifact@v4
-      with:
-        name: upload_url
-        path: ./
-    - id: set_upload_url
-      run: |
-        upload_url=`cat ./upload_url`
-        echo upload_url=$upload_url >> $GITHUB_OUTPUT
-
-    - name: Upload to Release
-      id: upload_to_release
-      uses: actions/upload-release-asset@v1.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.set_upload_url.outputs.upload_url }}
-        asset_path: ./${{ matrix.config.artifact }}
-        asset_name: ${{ matrix.config.artifact }}
-        asset_content_type: application/x-gtar
+            - name: Package
+              uses: actions/upload-artifact@v4
+              with:
+                  path: ${{ matrix.config.arch }}-w64-mingw32-gcc.7z
+                  name: ${{ matrix.config.arch }}-w64-mingw32-gcc.7z
