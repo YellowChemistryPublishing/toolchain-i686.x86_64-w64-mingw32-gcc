@@ -2,8 +2,13 @@
 
 Convenience fork courtesy of Engineering @ Yellow Chemistry Publishing.
 
-This toolchain must be hosted (built) on win32-msys2, and targets mingw(32|64) for >= Windows XP.
-Run `python build-(i686|x86_64)-w64-mingw32.py` to build your preferred toolchain.
+This toolchain must be built on win32-msys2, and targets mingw(32|64) for >= Windows XP.
+Run `python build-either-w64-mingw32.py` to build your preferred toolchain.
+
+| Build (env: msys2)     | Host                   | Target                 |
+| ---------------------- | ---------------------- | ---------------------- |
+| i686-w64-mingw32-gcc   | i686-w64-mingw32-gcc   | i686-w64-mingw32-gcc   |
+| x86_64-w64-mingw32-gcc | x86_64-w64-mingw32-gcc | x86_64-w64-mingw32-gcc |
 
 ___
 
