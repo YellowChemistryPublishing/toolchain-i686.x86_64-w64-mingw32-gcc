@@ -19,7 +19,7 @@ assert (
     subprocess.call(
         (
             f"./build --mode=gcc-15.1.0 --arch={args.arch} --enable-languages=c,c++,fortran --no-multilib --bootstrapall {'--bin-compress' if not args.noCompress else ''} {'--use-lto' if not args.noLTO else ''} "
-            "--rt-version=v12 --exceptions=dwarf --threads=posix --with-default-msvcrt=msvcrt --with-default-win32-winnt=0x0501 "
+            f"--rt-version=v12 --exceptions={"dwarf" if args.arch == "i686" else "seh"} --threads=posix --with-default-msvcrt=msvcrt --with-default-win32-winnt=0x0501 "
             f' --show-subtargets --update-sources --logviewer-command=cat --wait-for-logviewer --buildroot="{cwd}/build-i686-w64-mingw32" --jobs=$(nproc)'
         ),
         shell=True,
