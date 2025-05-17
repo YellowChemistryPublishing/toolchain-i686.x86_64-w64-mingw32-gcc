@@ -28,7 +28,7 @@ jobs:
 
             - name: Build
               shell: msys2 {0}
-              run: python3 build-either-w64-mingw32-gcc.py --arch ${{ matrix.config.arch }}
+              run: python3 build-either-w64-mingw32-gcc.py --buildroot /c/toolchain-build --arch ${{ matrix.config.arch }}
 
             - name: Package
               uses: actions/upload-artifact@v4
