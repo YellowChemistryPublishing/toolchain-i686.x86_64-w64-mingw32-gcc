@@ -1,5 +1,4 @@
-/toolchain-build/*
-!/toolchain-build/src/
+/toolchain-build/
 /toolchains/
 *.exe
 *.bat
