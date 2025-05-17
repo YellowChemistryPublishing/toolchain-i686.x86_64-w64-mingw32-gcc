@@ -35,12 +35,12 @@ buildArtifacts = None
 for subdir, dirs, files in os.walk(args.buildroot):
     for dir in dirs:
         if "rt_v" in dir:
-            buildArtifacts = f'{args.buildroot}/{dir}/mingw{"32" if args.arch == "i686" else "64"}'
+            buildArtifacts = f"{args.buildroot}/{dir}/mingw32"
             break
 assert buildArtifacts is not None
 
 ret = subprocess.call(
-    f"7z a {args.arch}-w64-mingw32-gcc.7z {buildArtifacts}",
+    f'7z a {args.arch}-w64-mingw32-gcc.7z "{buildArtifacts}"',
     shell=True,
 )
 assert ret == 0, f"Subcommand failed with exit code {ret}."
