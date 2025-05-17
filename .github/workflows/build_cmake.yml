@@ -14,11 +14,17 @@ jobs:
                     - { arch: "x86_64" }
 
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout
+              uses: actions/checkout@v3
 
-            - uses: msys2/setup-msys2@v2
+            - name: Setup Environment
+              uses: msys2/setup-msys2@v2
               with:
                   update: true
+
+            - name: Install Dependencies
+              shell: msys2 {0}
+              run: pacman -S python
 
             - name: Build
               shell: msys2 {0}
