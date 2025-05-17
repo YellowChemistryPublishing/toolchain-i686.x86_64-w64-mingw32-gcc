@@ -1,0 +1,37 @@
+name: Build and Package
+
+on: [push, pull_request]
+
+jobs:
+    build:
+        name: ${{ matrix.config.arch }}-w64-mingw32-gcc
+        runs-on: windows-2019
+        strategy:
+            fail-fast: false
+            matrix:
+                config:
+                    - { arch: "i686" }
+                    - { arch: "x86_64" }
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Setup Environment
+              uses: msys2/setup-msys2@v2
+              with:
+                  update: true
+
+            - name: Install Dependencies
+              shell: msys2 {0}
+              run: pacman --noconfirm -S python
+
+            - name: Build
+              shell: msys2 {0}
+              run: python3 build-either-w64-mingw32-gcc.py --arch ${{ matrix.config.arch }}
+
+            - name: Package
+              uses: actions/upload-artifact@v4
+              with:
+                  path: ${{ matrix.config.arch }}-w64-mingw32-gcc.7z
+                  name: ${{ matrix.config.arch }}-w64-mingw32-gcc.7z
