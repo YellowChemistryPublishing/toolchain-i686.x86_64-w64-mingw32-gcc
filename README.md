@@ -1,4 +1,5 @@
 ![Forked by atmc Badge](https://img.shields.io/badge/atmc-We%20forked%20this!-%23303030?labelColor=%23c80000)
+![Build Status](https://img.shields.io/github/actions/workflow/status/YellowChemistryPublishing/toolchain-i686.x86_64-w64-mingw32-gcc/build_and_package.yml)
 
 Convenience fork courtesy of Engineering @ Yellow Chemistry Publishing.
 
