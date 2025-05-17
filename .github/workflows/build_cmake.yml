@@ -24,7 +24,7 @@ jobs:
 
             - name: Install Dependencies
               shell: msys2 {0}
-              run: pacman -S python
+              run: pacman --noconfirm -S python
 
             - name: Build
               shell: msys2 {0}
