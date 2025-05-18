@@ -35,7 +35,7 @@ buildArtifacts = None
 for subdir, dirs, files in os.walk(args.buildroot):
     for dir in dirs:
         if "rt_v" in dir:
-            buildArtifacts = f"{args.buildroot}/{dir}/mingw32"
+            buildArtifacts = f'{args.buildroot}/{dir}/mingw{"32" if args.arch == "i686" else "64"}'
             break
 assert buildArtifacts is not None
 
