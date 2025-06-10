@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=2.0-ga.1
+PKG_VERSION=2.1-ga.1
 PKG_NAME=$PKG_ARCHITECTURE-mcfgthread-${PKG_VERSION}
 PKG_DIR_NAME=mcfgthread-${PKG_VERSION}
 PKG_TYPE=.tar.gz
@@ -47,7 +47,9 @@ PKG_PRIORITY=prereq
 
 #
 
-PKG_PATCHES=()
+PKG_PATCHES=(
+	mcfgthread/build-Declare-BaseGetNamedObjectDirectory-in-KERNEL32.patch
+)
 
 #
 
@@ -67,6 +69,8 @@ PKG_MAKE_FLAGS=(
 	all
 	CC=gcc
 	AR=ar
+	DLLTOOL=dlltool
+	STRIP=strip
 	RC=windres
 	CFLAGS="\"$COMMON_CFLAGS\""
 	CXXFLAGS="\"$COMMON_CXXFLAGS\""
@@ -74,6 +78,7 @@ PKG_MAKE_FLAGS=(
 	LDFLAGS="\"$COMMON_LDFLAGS\""
 	ABI_MAJOR=$ABI_MAJOR
 	SOURCE_DIR="$SRCS_DIR/$PKG_DIR_NAME/mcfgthread"
+	DEF_SUFFIX="$( [[ $PKG_ARCHITECTURE == i686 ]] && echo .i386 )"
 )
 
 #
@@ -82,6 +87,7 @@ PKG_INSTALL_FLAGS=(
 	-f "$PATCHES_DIR/mcfgthread/Makefile"
 	-j$JOBS
 	$( [[ $STRIP_ON_INSTALL == yes ]] && echo install-strip || echo install )
+	STRIP=strip
 	DESTDIR="$PREREQ_DIR/$PKG_ARCHITECTURE-mcfgthread"
 	ABI_MAJOR=$ABI_MAJOR
 	SOURCE_DIR="$SRCS_DIR/$PKG_DIR_NAME/mcfgthread"
