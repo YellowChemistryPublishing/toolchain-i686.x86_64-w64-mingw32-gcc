@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=3490100
+PKG_VERSION=3500400
 PKG_NAME=sqlite-${PKG_VERSION}
 PKG_DIR_NAME=sqlite-autoconf-${PKG_VERSION}
 PKG_TYPE=.tar.gz
