@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=2.1-ga.1
+PKG_VERSION=2.2-ga.1
 PKG_NAME=$PKG_ARCHITECTURE-mcfgthread-${PKG_VERSION}
 PKG_DIR_NAME=mcfgthread-${PKG_VERSION}
 PKG_TYPE=.tar.gz
@@ -47,9 +47,7 @@ PKG_PRIORITY=prereq
 
 #
 
-PKG_PATCHES=(
-	mcfgthread/build-Declare-BaseGetNamedObjectDirectory-in-KERNEL32.patch
-)
+PKG_PATCHES=()
 
 #
 
