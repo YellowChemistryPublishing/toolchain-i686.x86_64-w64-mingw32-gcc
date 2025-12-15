@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=2.45
+PKG_VERSION=2.45.1
 PKG_NAME=binutils-${PKG_VERSION}
 [[ $USE_MULTILIB == yes ]] && {
 	PKG_NAME=$BUILD_ARCHITECTURE-$PKG_NAME-multi
@@ -58,7 +58,6 @@ PKG_PATCHES=(
 	binutils/0009-fix-libiberty-configure.mingw.patch
 	binutils/0022-libiberty-missing-typedef.patch
 	binutils/0110-binutils-mingw-gnu-print.patch
-	binutils/windres-fix-crash.patch
 )
 
 #
