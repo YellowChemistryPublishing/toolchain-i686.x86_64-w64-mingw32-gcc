@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=3.12.11
+PKG_VERSION=3.13.11
 PKG_NAME=Python-${PKG_VERSION}
 PKG_DIR_NAME=Python-${PKG_VERSION}
 PKG_TYPE=git
@@ -48,7 +48,7 @@ PKG_PRIORITY=extra
 #
 
 PKG_EXECUTE_AFTER_UNCOMPRESS=(
-	"git reset --hard 5248fdecf1a5b7440848ab6705f211ac996d1c49" # Reset to this commit hash for reproducible builds
+	"git reset --hard 1f577554dcf3d231206f2c5c908bc0a2ef3dce8e" # Reset to this commit hash for reproducible builds
 )
 
 #
@@ -56,7 +56,7 @@ PKG_EXECUTE_AFTER_UNCOMPRESS=(
 PKG_PATCHES=(
 	Python3/python-3.11-remove-WASM_STDLIB-target.patch
 	Python3/python-3.11-_cursesmodule-fix-array-type.patch
-	Python3/python-3.11-fix-incompatible-pointer-types.patch
+	Python3/python-3.13-fix-incompatible-pointer-types.patch
 	Python3/python-3.12-fix-tk.patch
 )
 
