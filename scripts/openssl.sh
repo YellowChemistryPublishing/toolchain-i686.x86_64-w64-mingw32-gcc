@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=3.6.0
+PKG_VERSION=3.6.1
 PKG_NAME=openssl-${PKG_VERSION}
 PKG_DIR_NAME=openssl-${PKG_VERSION}
 PKG_TYPE=.tar.gz
@@ -50,8 +50,7 @@ PKG_CONFIGURE_SCRIPT=Configure
 #
 
 PKG_PATCHES=(
-	openssl/openssl-3.6.0-relocation.patch
-	openssl/003-no-set_printf_count_output.patch
+	openssl/openssl-3.6.1-relocation.patch
 )
 
 #
