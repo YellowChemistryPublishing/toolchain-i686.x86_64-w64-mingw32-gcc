@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=2.3-ga.2
+PKG_VERSION=2.4-ga.1
 PKG_NAME=$PKG_ARCHITECTURE-mcfgthread-${PKG_VERSION}
 PKG_DIR_NAME=mcfgthread-${PKG_VERSION}
 PKG_TYPE=.tar.gz
@@ -56,7 +56,7 @@ ABI_MINOR=$(echo $PKG_VERSION | sed -E 's/([^.]+)\.([^.]+)-([^.]+).*/\2/')
 ABI_STRING=$(echo $PKG_VERSION | sed -E 's/([^.]+)\.([^.]+)-([^.]+).*/\1.\2.\3/')
 
 PKG_EXECUTE_AFTER_CONFIGURE=(
-	"sed 's/@abi_major@/$ABI_MAJOR/g; s/@abi_minor@/$ABI_MINOR/g; s/@abi_string@/\"$ABI_STRING\"/g' $SRCS_DIR/$PKG_DIR_NAME/mcfgthread/version.h.in > version.h"
+	"sed 's/@abi_major@/$ABI_MAJOR/g; s/@abi_minor@/$ABI_MINOR/g; s/@abi_string@/$ABI_STRING/g' $SRCS_DIR/$PKG_DIR_NAME/mcfgthread/version.h.in > version.h"
 )
 
 #
