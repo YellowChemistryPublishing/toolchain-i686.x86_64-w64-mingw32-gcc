@@ -1,11 +1,13 @@
 ![Forked by atmc Badge](https://img.shields.io/badge/atmc-We%20forked%20this!-%23303030?labelColor=%23c80000)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/YellowChemistryPublishing/toolchain-i686.x86_64-w64-mingw32-gcc/build_and_package.yml)](https://github.com/YellowChemistryPublishing/toolchain-i686.x86_64-w64-mingw32-gcc/actions)
 
 Convenience fork courtesy of Engineering @ Yellow Chemistry Publishing.
 
 A native MinGW GCC 16 toolchain supporting Windows XP.
 
-> [!CAUTION] Note: We break `tzdb` functionality related to `GetDynamicTimeZoneInformation(...)` which doesn't exist on WinXP, so `detect_windows_zone()` always produces `{}`, but
-> _only_ when your binaries run under Windows XP. Windows Vista and newer are unaffected by this patch.
+> [!CAUTION]  
+> Note: We break `tzdb` functionality related to `GetDynamicTimeZoneInformation(...)` which doesn't exist on WinXP, so `detect_windows_zone()` always produces `{}`, but _only_ when
+> your binaries run under Windows XP. Windows Vista and newer are unaffected by this patch.
 
 This toolchain must be built on `win32`-`msys2`, and targets `mingw32`|`mingw64` for >= Windows XP. Run `python build-either-w64-mingw32-gcc.py --arch i686|x86_64` to build your
 preferred toolchain.
