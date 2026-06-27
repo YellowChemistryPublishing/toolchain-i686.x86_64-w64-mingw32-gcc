@@ -23,9 +23,9 @@ args = parser.parse_args()
 
 ret = subprocess.call(
     (
-        f"./build --mode=gcc-16.1.0 --arch={args.arch} --enable-languages=c,c++,fortran --no-multilib --bootstrapall {'--bin-compress' if not args.noCompress else ''} "
+        f"./build --mode=gcc-16.1.0 --arch={args.arch} --enable-languages=c,c++ --no-multilib --bootstrapall {'--bin-compress' if not args.noCompress else ''} "
         f'--rt-version=v14 --exceptions={"dwarf" if args.arch == "i686" else "seh"} --threads=posix --with-default-msvcrt=msvcrt --with-default-win32-winnt=0x0501 '
-        f'--show-subtargets --logviewer-command=cat --wait-for-logviewer --buildroot="{args.buildroot}" --jobs=$(nproc)'
+        f'--show-subtargets --logviewer-command=cat --wait-for-logviewer --buildroot="{args.buildroot}" --jobs={os.cpu_count()}'
     ),
     shell=True,
 )
@@ -35,8 +35,12 @@ buildArtifacts = None
 for subdir, dirs, files in os.walk(args.buildroot):
     for dir in dirs:
         if "rt_v" in dir:
-            buildArtifacts = f'{args.buildroot}/{dir}/mingw{"32" if args.arch == "i686" else "64"}'
-            break
+            tryBuildArtifacts = (
+                f'{args.buildroot}/{dir}/mingw{"32" if args.arch == "i686" else "64"}'
+            )
+            if os.path.exists(tryBuildArtifacts):
+                buildArtifacts = tryBuildArtifacts
+                break
 assert buildArtifacts is not None
 
 ret = subprocess.call(

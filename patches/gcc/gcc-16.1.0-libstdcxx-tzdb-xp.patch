@@ -1,0 +1,24 @@
+--- a/libstdc++-v3/src/c++20/tzdb.cc	2026-04-30 18:33:29.000000000 +1000
++++ b/libstdc++-v3/src/c++20/tzdb.cc	2026-06-26 22:05:00.116638100 +1000
+@@ -1783,11 +1783,20 @@
+     }
+ 
+ #ifdef _GLIBCXX_HAVE_WINDOWS_H
++    using get_dynamic_tz_info_fn =
++        DWORD (WINAPI *)(DYNAMIC_TIME_ZONE_INFORMATION*);
++
++    auto get_dynamic_tz_info =
++    reinterpret_cast<get_dynamic_tz_info_fn>(
++        GetProcAddress(
++            GetModuleHandleW(L"kernel32.dll"),
++            "GetDynamicTimeZoneInformation"));
++
+     string_view
+     detect_windows_zone() noexcept
+     {
+       DYNAMIC_TIME_ZONE_INFORMATION information{};
+-      if (GetDynamicTimeZoneInformation(&information) == TIME_ZONE_ID_INVALID)
++      if (!get_dynamic_tz_info || get_dynamic_tz_info(&information) == TIME_ZONE_ID_INVALID)
+ 	return {};
+ 
+       constexpr SYSTEMTIME all_zero_time{};
