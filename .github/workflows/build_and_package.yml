@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
     build:
         name: ${{ matrix.config.arch }}-w64-mingw32-gcc
-        runs-on: windows-2019
+        runs-on: windows-latest
         strategy:
             fail-fast: false
             matrix:
