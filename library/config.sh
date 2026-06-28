@@ -36,11 +36,11 @@
 # **************************************************************************
 
 MINGW_W64_BUILDS_VERSION="MinGW-W64-builds-5.0.0"
-MINGW_W64_PKG_STRING="Built by Engineering @ Yellow Chemistry Publishing."
+MINGW_W64_PKG_STRING="Built by Engineering at Yellow Chemistry Publishing."
 
 # **************************************************************************
 
-PROJECT_ROOT_URL=https://github.com/niXman/mingw-builds
+PROJECT_ROOT_URL=hhttps://github.com/YellowChemistryPublishing/toolchain-i686.x86_64-w64-mingw32-gccs
 BUG_URL=$PROJECT_ROOT_URL
 PROJECT_FS_ROOT_DIR=/home/frs/project/mingw-w64
 
